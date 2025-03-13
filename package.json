@@ -1,0 +1,33 @@
+{
+	"name": "team-members-block",
+	"version": "0.1.0",
+	"description": "Team Members Block",
+	"author": "Ali Khakbazan",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "npm run build && zip -r team-members-block.zip team-members-block.php build/",
+		"start": "wp-scripts start"
+	},
+	"devDependencies": {
+		"@types/react": "^19.0.10",
+		"@types/react-dom": "^19.0.4",
+		"@types/wordpress__block-editor": "^11.5.16",
+		"@types/wordpress__blocks": "^12.5.17",
+		"@wordpress/scripts": "^30.12.0",
+		"css-loader": "^7.1.2",
+		"sass-loader": "^16.0.5",
+		"style-loader": "^4.0.0"
+	},
+	"dependencies": {
+		"@wordpress/block-editor": "^14.14.0",
+		"@wordpress/components": "^29.6.0",
+		"@wordpress/interactivity": "^6.19.0",
+		"clsx": "^2.1.1"
+	}
+}
