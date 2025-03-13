@@ -4,19 +4,17 @@ import {
 	SETTINGS_DEFAULTS,
 	getColorClassName,
 } from "@wordpress/block-editor";
-import styles from "./style.module.scss";
 import { useGetTeamMembers } from "../../models/team/hooks/useGetTeamMembers";
 import type { BlockEditProps } from "@wordpress/blocks";
-import { MemberCard } from "../../common/member-card";
-import { joinStrings } from "../../core/utils/joinStrings";
 import { ColorPalette, PanelBody, PanelRow } from "@wordpress/components";
 import type { Attributes } from "../../types/block";
 import { useCallback } from "react";
+import { MembersList } from "../members-list";
 
 const Edit = ({ attributes, setAttributes }: BlockEditProps<Attributes>) => {
 	const blockProps = useBlockProps();
 
-	const { data, isFetching, isError } = useGetTeamMembers({
+	const { isFetching, isError } = useGetTeamMembers({
 		onSuccess: (response) => {
 			if (response) {
 				setAttributes({ members: response });
@@ -70,34 +68,15 @@ const Edit = ({ attributes, setAttributes }: BlockEditProps<Attributes>) => {
 						/>
 					</PanelRow>
 				</PanelBody>
-
-				
 			</InspectorControls>
 
 			<div {...blockProps}>
-				{isFetching ? (
-					<p>Loading Team Members...</p>
-				) : isError ? (
-					<p>Error fetching team members</p>
-				) : (
-					<ul className={styles.wrapper} role="list">
-						{data?.map((item) => {
-							return (
-								<li key={`edit-${item?.id}`} role="listitem">
-									<MemberCard
-										name={item?.username}
-										address={joinStrings({
-											data: [item?.address?.city, item?.address?.street],
-											separator: ", ",
-										})}
-										imageSrc=""
-										customStyles={attributes?.styles}
-									/>
-								</li>
-							);
-						})}
-					</ul>
-				)}
+				<MembersList
+					members={attributes?.members}
+					customStyles={attributes?.styles}
+					isFetching={isFetching}
+					isError={isError}
+				/>
 			</div>
 		</>
 	);
